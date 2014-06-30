@@ -22,7 +22,6 @@
 
   :to to
 
-
   :on-awake
   (fn [ga]
     (letc ga [transform :transform]
@@ -56,3 +55,19 @@
   (fn [ga]
     (when end-callback
       (end-callback ga))))
+
+(defn movedirects [& {:keys [ga points durations end-callback] :or {}}]
+  (
+   let [component2 (movedirect :from (nth points 1)
+                               :to (nth points 2)
+                               :duration (nth durations 1)
+                               :end-callback end-callback
+                               )]
+
+   (movedirect :from (nth points 0)
+               :to (nth points 1)
+               :duration (nth durations 0)
+               :end-callback #(do
+                                (event/add-component! ga component2)
+                                (.log js/console "arrived multi!"))
+               )))
