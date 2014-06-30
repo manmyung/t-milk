@@ -21,13 +21,21 @@
                             [(text)]
                             :pos [500 100])
 
-        component (movedirect :from [100 200]
-                              :to [400 300]
+        component1 (movedirect :from [400 300]
+                              :to [200 200]
                               :duration 1000
                               :end-callback #(do
                                                (event/del-gatom ga)
                                                (.log js/console "arrived!!"))
-                              )]
+                              )
+        component (movedirect :from [100 200]
+                              :to [400 300]
+                              :duration 1000
+                              :end-callback #(do
+                                               (event/add-component! ga component1)
+                                               (.log js/console "arrived!!"))
+                              )
+        ]
 
     (event/add-component! ga component))
  )
