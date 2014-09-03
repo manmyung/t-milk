@@ -5,18 +5,36 @@
 
    ;; debug.
    [t-milk.behaviour.fps :refer [fps]]
-   [t-milk.behaviour.text :refer [text]]
+   [t-milk.behaviour.text :refer [text box key-cheat]]
    [t-milk.behaviour.movedirect :refer [movedirect movedirects]]
    ))
 
+
+
+
 ;; main.
 (defn load []
-  (.log js/console "test movedirect")
+  (def a (event/new-gatom "fps" [(box)] :pos [200 300]))
+  (let [component (movedirect :from [200 300]
+                              :to [100 300]
+                              :duration 2000
+                              :end-callback #(do
+                                              (.log js/console "deleted!"))
+                              )]
+
+    (event/add-component! a component))
+
+  (event/new-gatom "key-cheat"
+                   [(key-cheat
+                      ;; f :: fold
+                      "f" #(js/alert "f key pressed")
+                      )]
+                   :pos [0 0])
 
   ;(def a (event/new-gatom "fps" [(fps)] :pos [100 50]))
   ;(def a (event/new-gatom "text" [(text)] :pos [100 150]))
 
-  (let [ga (event/new-gatom "test"
+  #_(let [ga (event/new-gatom "test"
                             [(text)]
                             :pos [500 100])
 
@@ -38,7 +56,7 @@
 
     (event/add-component! ga component))
 
-  (let [ga (event/new-gatom "test_multi"
+  #_(let [ga (event/new-gatom "test_multi"
                             [(text)]
                             :pos [500 100])
 
