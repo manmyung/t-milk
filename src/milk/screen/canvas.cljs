@@ -51,7 +51,7 @@
     (reset! ctx* ctx)
     (reset! width* w)
     (reset! height* h)
-    (set-view! 1024 768);760 570)
+    (set-view! 800 600)
     ))
 
 
